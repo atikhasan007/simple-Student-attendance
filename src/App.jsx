@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import './App.css'
+import React, { useState } from 'react';
+import './App.css';
 const App = () => {
 
   const [studentName, setStudentName] = useState("");
@@ -13,6 +13,9 @@ const App = () => {
   const [editMode, setEditMode] = useState(false);
   const [editableStudent, setEditableStudent] = useState(null)
 
+  //derived State 
+  const presentStudentList = students.filter((item)=> item.isPresent === true, 
+);
 
   const submitHandler = (e)=>{
     e.preventDefault();
@@ -29,6 +32,10 @@ const App = () => {
     setStudentName(e.target.value)
 
   }
+
+
+
+
 
 
   const createHandler = () =>{
@@ -74,6 +81,52 @@ const App = () => {
   }
 
 
+  const makePresentHandler = (student) => {
+    if(student.isPresent !== undefined) {
+      return alert(
+        `this student is already in the ${
+        student.isPresent===true ? "Present List":"Absent List "
+        }`)
+
+    };
+
+    const updateStudentList = students.map((item)=>{
+      if(item.id === student.id) {
+        return { ...item, isPresent:true};
+      }
+      return item;
+    });
+   setStudents(updateStudentList);
+  };
+  const makeAbsentHandler = (student) => {
+    if(student.isPresent !== undefined) {
+      return alert(
+        `this student is already in the ${
+        student.isPresent===true ? "Present List":"Absent List "
+        }`)
+
+    };
+
+    const updateStudentList = students.map((item)=>{
+      if(item.id === student.id) {
+        return { ...item, isPresent:false};
+      }
+      return item;
+    });
+   setStudents(updateStudentList);
+  };
+
+ const toggleList = (student) =>{
+
+  const updateStudentList = students.map((item)=>{
+    if(item.id===student.id) {
+      return {...item, isPresent: !item.isPresent};
+    }
+    return item;
+  })
+  setStudents(updateStudentList);
+
+ }
 
   return (
     <div className='App'>
@@ -96,8 +149,8 @@ const App = () => {
                   {student.name}
                   <button onClick={()=>editHandler(student)}>Edit</button>
                   <button onClick={()=> removeHandler(student.id)}>Delete</button>
-                  <button >Make Present</button>
-                  <button>Make Absent</button>
+                  <button onClick={()=> makePresentHandler(student)} >Make Present</button>
+                  <button onClick={()=> makeAbsentHandler(student)}>Make Absent</button>
                 </span>
               </li>
             ))
@@ -106,9 +159,26 @@ const App = () => {
        </div>
        <div className='list present-students'>
            <h2>Present Students</h2>
+           {presentStudentList
+           .map((student)=>(
+            <li key={student.id}>
+              <span>{student.name}</span>
+              <button onClick={()=>toggleList(student)}>Accidentally Added</button>
+            </li>
+           ))
+           }
         </div>
        <div className='list absent-students'>
           <h2>Absent Students</h2>
+          {students.filter((item)=>item.isPresent===false).
+          map((student)=>(
+            <li key={student.id}>
+              <span>{student.name}</span>
+              <button onClick={()=> toggleList(student)}>Accidentally Added</button>
+
+            </li>
+          ))
+          }
        </div>
     
       </div>
