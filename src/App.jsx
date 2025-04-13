@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
+import StudentFrom from './components/StudentFrom';
 const App = () => {
 
-  const [studentName, setStudentName] = useState("");
+
   const [students, setStudents] = useState([
     {
       id:1 ,
@@ -17,39 +18,14 @@ const App = () => {
   const presentStudentList = students.filter((item)=> item.isPresent === true, 
 );
 
-  const submitHandler = (e)=>{
-    e.preventDefault();
-    if(studentName.trim() === ""){
-      return alert(`Please Provide a valid name`)
-    }
-
-
-    editMode? updateHandler() : createHandler();
-
-  }
-
-  const changeNameHandler = (e) =>{
-    setStudentName(e.target.value)
-
-  }
+  
 
 
 
 
 
 
-  const createHandler = () =>{
-    const newStudent = {
-      id : Date.now() + "",
-      name : studentName,
-      isPresent: undefined,
-
-    };
-
-    setStudents([...students, newStudent]);
-    setStudentName("");
-
-  }
+ 
 
   const editHandler = (student) => {
      setEditMode(true);
@@ -58,21 +34,6 @@ const App = () => {
 
   }
 
-  const updateHandler = () =>{
-
-    const updateStudentList = students.map(student =>{
-       if(student.id === editableStudent.id){
-        return {...student , name:studentName};
-       }
-
-       return student;
-    })
-
-    setStudents(updateStudentList);
-    setEditMode(false);
-    setEditableStudent(null);
-    setStudentName("");
-  }
 
   const removeHandler = (studentId) =>{
     const updateStudentList = students.filter((student)=>student.id!==studentId);
@@ -130,12 +91,15 @@ const App = () => {
 
   return (
     <div className='App'>
-      <form onSubmit={submitHandler}>
-        <input type='text' value={studentName} onChange={changeNameHandler}/>
-        <button type='submit'>{editMode?"Update Student":"Add Students"}</button>
-      </form>
-
-
+      
+        <StudentFrom 
+        students={students}
+        setStudents={setStudents}
+        editMode = {editMode}
+        setEditMode={setEditMode}
+        editableStudent={editableStudent}
+        setEditableStudent={setEditableStudent}
+        />
 
       <div className='student-section'>
        
