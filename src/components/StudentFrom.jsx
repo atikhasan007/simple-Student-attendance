@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const StudentFrom = (props) => {
     const [studentName, setStudentName] = useState("");
@@ -8,12 +8,21 @@ const StudentFrom = (props) => {
           setStudents,
            editableStudent, 
            setEditMode,
-           setEditableStudent} = props;
+           setEditableStudent,
+            } = props;
      
       const changeNameHandler = (e) =>{
         setStudentName(e.target.value)
     
       }
+
+
+      useEffect(()=>{
+        if(editableStudent){
+            setStudentName(editableStudent.name);
+        }
+      }, [editableStudent])
+      
     
       const submitHandler = (e)=>{
         e.preventDefault();

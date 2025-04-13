@@ -30,7 +30,7 @@ const App = () => {
   const editHandler = (student) => {
      setEditMode(true);
      setEditableStudent(student);
-     setStudentName(student.name);
+  
 
   }
 
