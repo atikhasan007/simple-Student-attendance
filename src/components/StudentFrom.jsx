@@ -1,70 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useContext } from 'react';
+import { StudentCtx } from '../context/Student';
 
-const StudentFrom = (props) => {
-    const [studentName, setStudentName] = useState("");
+const StudentFrom = () => {
+  
     
-    const {editMode, 
-         students,
-          setStudents,
-           editableStudent, 
-           setEditMode,
-           setEditableStudent,
-            } = props;
+    const {editMode,
+          
+           submitHandler,
+           changeNameHandler,
+           studentName
+           
+            } = useContext(StudentCtx)
      
-      const changeNameHandler = (e) =>{
-        setStudentName(e.target.value)
-    
-      }
 
 
-      useEffect(()=>{
-        if(editableStudent){
-            setStudentName(editableStudent.name);
-        }
-      }, [editableStudent])
-      
-    
-      const submitHandler = (e)=>{
-        e.preventDefault();
-        if(studentName.trim() === ""){
-          return alert(`Please Provide a valid name`)
-        }
-    
-    
-        editMode? updateHandler() : createHandler();
-    
-      }
-
-      const createHandler = () =>{
-        const newStudent = {
-          id : Date.now() + "",
-          name : studentName,
-          isPresent: undefined,
-    
-        };
-    
-        setStudents([...students, newStudent]);
-        setStudentName("");
-    
-      }
-
-
-
-  const updateHandler = () =>{
-
-    const updateStudentList = students.map(student =>{
-       if(student.id === editableStudent.id){
-        return {...student , name:studentName};
-       }
-
-       return student;
-    })
-
-    setStudents(updateStudentList);
-    setEditMode(false);
-    setEditableStudent(null);
-    setStudentName("");
-  }
+ 
     
 
   return (

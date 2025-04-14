@@ -1,7 +1,8 @@
 import React from 'react'
-
-const PresentStudentList = (props) => {
-    const {students,toggleList} = props;
+import { useContext } from 'react'; 
+import { StudentCtx } from '../context/Student';
+const PresentStudentList = () => {
+    const {students,toggleList} = useContext(StudentCtx);
 
       //derived State 
   const presentStudentList = students.filter((item)=> item.isPresent === true, 

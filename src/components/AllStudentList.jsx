@@ -1,73 +1,21 @@
 import React from 'react'
+import { useContext } from 'react';
+import { StudentCtx } from '../context/Student';
 
-
-    const AllStudentList = (props) => {
+    const AllStudentList = () => {
         const {
           students,
-          setStudents,
-          setEditMode,
-          setEditableStudent,
-          setStudentName
-        } = props;
+          editHandler,
+          removeHandler,
+          makeAbsentHandler,
+          makePresentHandler
+        
+        } = useContext(StudentCtx)
       
         
       
 
        
-
-  const editHandler = (student) => {
-    setEditMode(true);
-    setEditableStudent(student);
-    setStudentName(student.name)
- 
-
- }
-
-
-
-
- const removeHandler = (studentId) =>{
-    const updateStudentList = students.filter((student)=>student.id!==studentId);
-    setStudents(updateStudentList);
-
-  }
-
-  const makePresentHandler = (student) => {
-    if(student.isPresent !== undefined) {
-      return alert(
-        `this student is already in the ${
-        student.isPresent===true ? "Present List":"Absent List "
-        }`)
-
-    };
-
-    const updateStudentList = students.map((item)=>{
-      if(item.id === student.id) {
-        return { ...item, isPresent:true};
-      }
-      return item;
-    });
-   setStudents(updateStudentList);
-  };
-
-  
-  const makeAbsentHandler = (student) => {
-    if(student.isPresent !== undefined) {
-      return alert(
-        `this student is already in the ${
-        student.isPresent===true ? "Present List":"Absent List "
-        }`)
-
-    };
-
-    const updateStudentList = students.map((item)=>{
-      if(item.id === student.id) {
-        return { ...item, isPresent:false};
-      }
-      return item;
-    });
-   setStudents(updateStudentList);
-  };
 
 
   return (
