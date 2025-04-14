@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import StudentFrom from './components/StudentFrom';
-import AllStudentList from './components/AllStudentList'
-import PresentStudentList from './components/PresentStudentList';
-import AbsentStudentList from './components/AbsentStudentList';
+import StudentSection from './components/StudentSection';
 const App = () => {
 
   
@@ -13,32 +11,19 @@ const App = () => {
            name:"md atik hasan"
          }
        ]);
- 
- 
-
   const [editMode, setEditMode] = useState(false);
   const [editableStudent, setEditableStudent] = useState(null)
+  const [studentName, setStudentName] = useState("");
 
 
 
-
-  
- const toggleList = (student) =>{
-
-  const updateStudentList = students.map((item)=>{
-    if(item.id===student.id) {
-      return {...item, isPresent: !item.isPresent};
-    }
-    return item;
-  })
-  setStudents(updateStudentList);
-
- }
 
   return (
     <div className='App'>
       
         <StudentFrom 
+        studentName={studentName}
+        setStudentName={setStudentName}
         students={students}
         setStudents={setStudents}
         editMode = {editMode}
@@ -47,30 +32,19 @@ const App = () => {
         setEditableStudent={setEditableStudent}
         />
 
-      <div className='student-section'>
-       
-      {/* list of all students */}
-      <AllStudentList
-  students={students}
-  setStudents={setStudents}
-  setEditMode={setEditMode}
-  setEditableStudent={setEditableStudent}
-  
-/>
+        <StudentSection 
+        
+         
+         students={students}
+         setStudents={setStudents}
+         editMode = {editMode}
+         setEditMode={setEditMode}
+         editableStudent={editableStudent}
+         setEditableStudent={setEditableStudent}
+         
+        />
 
-{/* present list */}
-     <PresentStudentList 
      
-     students = {students}
-     toggleList = {toggleList}
-     />
-       {/* absent list */}
-       <AbsentStudentList 
-       students = {students}
-       toggleList = {toggleList}
-       />
-    
-      </div>
     
     </div>
   )
