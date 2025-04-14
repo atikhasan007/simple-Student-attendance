@@ -16,12 +16,16 @@ const counterReducer = (state, action)=>{
 
 
 
-  switch(action){
-    case  "increase" :
-      return state + 1;
-    case "decrease" :
-      return state - 1;
+  switch(action.type){
+    case  "increase" : {
+      return state + action.payload;
+    }
+    case "decrease" : {
+      return state - action.payload;
 
+
+    }
+      
   }
 }
 
@@ -46,8 +50,8 @@ const App = () => {
     <div className='App'>
       <p>the value of counter is {counter}</p>
 
-      <button onClick={()=>dispatch("increase")}>increase by 1</button>
-      <button onClick={()=>dispatch("decrease")}>decrease by 1</button>
+      <button onClick={()=>dispatch({type:"increase", payload: 10})}>increase by 10</button>
+      <button onClick={()=>dispatch({type:"decrease", payload:5})}>decrease by 5</button>
     </div>
   )
 }
